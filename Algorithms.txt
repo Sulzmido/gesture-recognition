@@ -1,0 +1,34 @@
+ALGORITHMS/PSEUDOCODE
+
+Gesture recognition using HOG-SVM
+
+1. Image Processing (RGB2GrayTransformer, HogTransformer).
+
+    i) Read train_images as RGB from the filesystem.
+    ii) Resize all images to 102(height) by 136(width).
+    iii) Convert all images to grayscale.
+    v) Compute Histogram of Oriented Gradients (HOG) for all images.
+
+2. Scaling (StandardScalar).
+
+    i) Standardize HOG image features by removing the mean and scaling to unit variance
+    ii) The standard score of a sample `x` is calculated as:
+
+        z = (x - u) / s
+
+        where `u` is the mean of the training samples,
+        and `s` is the standard deviation of the training samples.
+
+3. Training using SVC (Support Vector Classification)
+
+    i) Train using svc model i.e  Fit transformed inputs to labels.
+    ii) Save model for usage and metrics.
+    iii) Save transformers [RGB2GrayTransformer, HogTransformer, StandardScaler] for usage and metrics.
+
+4. Testing
+
+    i) Restore svc model and transformers
+    ii) Read test_image as RGB from filesystem
+    iii) Resize image to 102*136
+    iv) Apply all transformers on image in the right order [RGB2GrayTransformer -> HogTransformer -> StandardScaler]
+    v) Use model to predict output.
